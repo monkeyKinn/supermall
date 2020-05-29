@@ -10,26 +10,133 @@
     <home-recommend-view :recommends="recommends"/>
     <!--本周流行-->
     <home-feature-view/>
+    <!--'流行','新款','精选'-->
+    <tab-control class="tab-control" :titles="['流行','新款','精选']"/>
+    <ul>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+      <li>213</li>
+    </ul>
   </div>
 </template>
 
 <script>
-  import Navbar from "components/common/navbar/Navbar";
   import HomeSwiper from "./childComps/HomeSwiper";
+  import HomeRecommendView from "./childComps/HomeRecommendView";
+  import HomeFeatureView from "./childComps/HomeFeatureView";
 
+  import Navbar from "components/common/navbar/Navbar";
+  import TabControl from "components/content/tabControl/TabControl";
 
   // home的网络请求,因为没有用default导出所以这里要用大括号
   import {getHomeMultidata} from "network/home";
-  import HomeRecommendView from "./childComps/HomeRecommendView";
-  import HomeFeatureView from "./childComps/HomeFeatureView";
 
   export default {
     name: "Home",
     components: {
-      HomeFeatureView,
-      HomeRecommendView,
       HomeSwiper,
-      Navbar
+      HomeRecommendView,
+      HomeFeatureView,
+
+      Navbar,
+      TabControl
     },
     data() {
       return {
@@ -64,5 +171,11 @@
     top: 0;
     z-index: 3;
 
+  }
+
+  /*简单的吸顶功能*/
+  .tab-control {
+    position: sticky;
+    top: 44px;
   }
 </style>
