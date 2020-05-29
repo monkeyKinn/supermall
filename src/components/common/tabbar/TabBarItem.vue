@@ -26,9 +26,7 @@
       }
     },
     data() {
-      return {
-
-      }
+      return {}
     },
     // 计算属性
     computed: {
@@ -74,6 +72,7 @@
     vertical-align: middle;
     margin-bottom: 2px;
   }
+
   /*移动端，div点击瞬间，出现阴影问题解决。*/
   div {
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);

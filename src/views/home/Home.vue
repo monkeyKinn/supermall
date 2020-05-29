@@ -1,24 +1,30 @@
 <template>
   <div>
+    <!--导航栏-->
     <navbar class="home">
       <div slot="center">セックスコンビニ</div>
     </navbar>
+    <!--轮播图-->
+    <home-swiper :banners="banners"/>
   </div>
 </template>
 
 <script>
   import Navbar from "components/common/navbar/Navbar";
-  // 因为没有用default导出所以这里要用大括号
+  import HomeSwiper from "./childComps/HomeSwiper";
+
+  // home的网络请求,因为没有用default导出所以这里要用大括号
   import {getHomeMultidata} from "network/home";
 
   export default {
     name: "Home",
     components: {
+      HomeSwiper,
       Navbar
     },
     data() {
       return {
-        // 保存getHomeMultidata的res
+        // 保存getHomeMultidata()的res
         banners: [],
         recommends: []
       }
