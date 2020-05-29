@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="home">
     <!--导航栏-->
     <navbar class="home">
       <div slot="center">セックスコンビニ</div>
@@ -8,6 +8,8 @@
     <home-swiper :banners="banners"/>
     <!--推荐视图-->
     <home-recommend-view :recommends="recommends"/>
+    <!--本周流行-->
+    <home-feature-view/>
   </div>
 </template>
 
@@ -19,10 +21,12 @@
   // home的网络请求,因为没有用default导出所以这里要用大括号
   import {getHomeMultidata} from "network/home";
   import HomeRecommendView from "./childComps/HomeRecommendView";
+  import HomeFeatureView from "./childComps/HomeFeatureView";
 
   export default {
     name: "Home",
     components: {
+      HomeFeatureView,
       HomeRecommendView,
       HomeSwiper,
       Navbar
@@ -46,8 +50,19 @@
 </script>
 
 <style scoped>
+  #home {
+    padding-top: 44px;
+  }
+
   .home {
     background: var(--color-tint);
     color: var(--color-background);
+
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 3;
+
   }
 </style>
