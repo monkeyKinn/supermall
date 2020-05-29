@@ -61,6 +61,8 @@
     text-align: center;
     height: 49px;
     font-size: 14px;
+    /*在这刻修改底部tabbar字体默认不活跃颜色*/
+    /*color: blue;*/
   }
 
   /*图标大小*/

@@ -2,6 +2,7 @@ module.exports = {
   configureWebpack: {
     resolve: {
       alias: {
+        // 别名
         'assets': '@/assets',
         'common': '@/common',
         'components': '@/components',
@@ -10,4 +11,5 @@ module.exports = {
       }
     }
   }
+  // ,publicPath: './' // <----这里就是会修改webpack的outPath.publicPath
 }

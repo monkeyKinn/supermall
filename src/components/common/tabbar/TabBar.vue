@@ -22,7 +22,7 @@
     /*自动平分*/
     left: 0;
     right: 0;
-    bottom: 0px;
+    bottom: 0;
 
     /*盒子阴影*/
     box-shadow: 0 -3px 1px rgba(100, 100, 100, .2);
