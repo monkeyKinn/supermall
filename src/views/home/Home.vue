@@ -126,7 +126,10 @@
   import TabControl from "components/content/tabControl/TabControl";
 
   // home的网络请求,因为没有用default导出所以这里要用大括号
-  import {getHomeMultidata} from "network/home";
+  import {
+    getHomeMultidata,
+    getHomeGoods
+  } from "network/home";
 
   export default {
     name: "Home",
@@ -142,16 +145,45 @@
       return {
         // 保存getHomeMultidata()的res
         banners: [],
-        recommends: []
+        recommends: [],
+        goods: {
+          'pop': {page: 0,list: []},
+          'new': {page: 0,list: []},
+          'sell': {page: 0,list: []},
+        }
       }
     },
+
+    // 只写主要逻辑
     created() {
       // 组件刚加载完就发送网络请求,请求首页多个展示数据,加个()表示调用函数
-      getHomeMultidata().then(res => {
-        console.log(res);
-        this.banners = res.data.banner.list
-        this.recommends = res.data.recommend.list
-      })
+      this.getHomeMultidata()
+
+      // 初始化请求商品数据
+      this.getHomeGoods('pop')
+      this.getHomeGoods('new')
+      this.getHomeGoods('sell')
+    },
+
+    methods: {
+      getHomeMultidata() {
+        getHomeMultidata().then(res => {
+          // console.log(res);
+          this.banners = res.data.banner.list
+          this.recommends = res.data.recommend.list
+        })
+      },
+
+      getHomeGoods(type) {
+        const page = this.goods[type].page + 1
+        getHomeGoods(type,page).then(res => {
+          console.info(res)
+          // 把后面的数组依次放入前面的,把查询出来的数据保存
+          this.goods[type].list.push(...res.data.list)
+          // 因为加了数据,所以页码要加1
+          this.goods[type].page += 1
+        })
+      }
     }
   }
 </script>
