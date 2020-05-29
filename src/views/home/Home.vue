@@ -6,6 +6,8 @@
     </navbar>
     <!--轮播图-->
     <home-swiper :banners="banners"/>
+    <!--推荐视图-->
+    <home-recommend-view :recommends="recommends"/>
   </div>
 </template>
 
@@ -13,12 +15,15 @@
   import Navbar from "components/common/navbar/Navbar";
   import HomeSwiper from "./childComps/HomeSwiper";
 
+
   // home的网络请求,因为没有用default导出所以这里要用大括号
   import {getHomeMultidata} from "network/home";
+  import HomeRecommendView from "./childComps/HomeRecommendView";
 
   export default {
     name: "Home",
     components: {
+      HomeRecommendView,
       HomeSwiper,
       Navbar
     },
