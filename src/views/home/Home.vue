@@ -9,7 +9,8 @@
             ref="scroll"
             :probe-type="3"
             @scroll="contentScroll"
-            :pull-up-load="true">
+            :pull-up-load="true"
+            @pullingUp="loadMore">
       <!--轮播图-->
       <home-swiper :banners="banners"/>
       <!--推荐视图-->
@@ -45,6 +46,8 @@
     getHomeMultidata,
     getHomeGoods
   } from "network/home";
+
+  import {debounce} from 'common/utils'
 
   export default {
     name: "Home",
@@ -96,7 +99,7 @@
 
     mounted() {
       // 防抖封装
-      const refresh = this.debounce(this.$refs.scroll.refresh,500)
+      const refresh = debounce(this.$refs.scroll.refresh,500)
       // 3.监听事件总线中图片加载完成事件
       this.$bus.$on('itemImageLoaded', () => {
         refresh()
@@ -108,18 +111,7 @@
       /**
        * 事件监听
        */
-      // 防抖
-      debounce(func,delay) {
-        let timer = null
-        return function (...args) {
-          // 有值就清除
-          if (timer) clearTimeout(timer)
 
-          timer = setTimeout(() => {
-            func.apply(this,args)
-          },delay)
-        }
-      },
 
       tabClick(index) {
         switch (index) {
@@ -147,9 +139,10 @@
         this.isShowBackTop = (-position.y) > 1000
       },
 
-      // loadMore() {
-      //   this.getHomeGoods(this.currentType)
-      // },
+      loadMore() {
+        console.log('加载更多');
+        this.getHomeGoods(this.currentType)
+      },
       /**
        * network request methods
        */
@@ -169,8 +162,8 @@
           // 因为加了数据,所以页码要加1
           this.goods[type].page += 1
 
-          // // 为了再次下拉更多
-          // this.$refs.scroll.finishPullUp()
+          // 为了再次下拉更多
+          this.$refs.scroll.finishPullUp()
         })
       },
 
