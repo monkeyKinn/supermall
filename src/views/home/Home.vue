@@ -5,7 +5,10 @@
       <div slot="center">セックスコンビニ</div>
     </navbar>
 
-    <scroll class="content" ref="scroll">
+    <scroll class="content"
+            ref="scroll"
+            :probe-type="3"
+            @scroll="contentScroll">
       <!--轮播图-->
       <home-swiper :banners="banners"/>
       <!--推荐视图-->
@@ -20,7 +23,7 @@
     </scroll>
 
     <!--组件监听点击事件要加native属性-->
-    <back-top @click.native="backTop"/>
+    <back-top @click.native="backTop" v-show="isShowBackTop"/>
 
   </div>
 </template>
@@ -65,7 +68,8 @@
           'new': {page: 0, list: []},
           'sell': {page: 0, list: []},
         },
-        currentType: 'pop'
+        currentType: 'pop',
+        isShowBackTop: false
       }
     },
     computed: {
@@ -108,6 +112,11 @@
         console.log('b 2 t');
         // 在500ms内回到顶部
         this.$refs.scroll.scrollTo(0,0,500)
+      },
+
+      contentScroll(position) {
+        // console.log(position);
+        this.isShowBackTop = (-position.y) > 1000
       },
 
       /**
