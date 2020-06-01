@@ -5,7 +5,7 @@
       <div slot="center">セックスコンビニ</div>
     </navbar>
 
-    <scroll class="content">
+    <scroll class="content" ref="scroll">
       <!--轮播图-->
       <home-swiper :banners="banners"/>
       <!--推荐视图-->
@@ -19,6 +19,9 @@
       <goods-list :goods="showGoods"/>
     </scroll>
 
+    <!--组件监听点击事件要加native属性-->
+    <back-top @click.native="backTop"/>
+
   </div>
 </template>
 
@@ -30,25 +33,27 @@
   import Navbar from "components/common/navbar/Navbar";
   import TabControl from "components/content/tabControl/TabControl";
   import GoodsList from "components/content/goods/goodsList";
+  import Scroll from "components/common/scroll/Scroll";
+  import BackTop from "components/content/backTop/BackTop";
 
   // home的网络请求,因为没有用default导出所以这里要用大括号
   import {
     getHomeMultidata,
     getHomeGoods
   } from "network/home";
-  import Scroll from "../../components/common/scroll/Scroll";
 
   export default {
     name: "Home",
     components: {
-      Scroll,
       HomeSwiper,
       HomeRecommendView,
       HomeFeatureView,
 
       Navbar,
       TabControl,
-      GoodsList
+      GoodsList,
+      Scroll,
+      BackTop
     },
     data() {
       return {
@@ -97,6 +102,12 @@
             this.currentType = 'sell'
             break
         }
+      },
+
+      backTop() {
+        console.log('b 2 t');
+        // 在500ms内回到顶部
+        this.$refs.scroll.scrollTo(0,0,500)
       },
 
       /**

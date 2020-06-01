@@ -21,6 +21,12 @@
       this.scroll = new BScroll(this.$refs.wrapper, {
 
       })
+    },
+    methods: {
+      scrollTo(x, y,time = 300) {
+        // 回到顶部,第三个参数是所用时间
+        this.scroll.scrollTo(x,y,time)
+      }
     }
   }
 </script>
