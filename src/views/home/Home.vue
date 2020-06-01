@@ -4,17 +4,20 @@
     <navbar class="home">
       <div slot="center">セックスコンビニ</div>
     </navbar>
-    <!--轮播图-->
-    <home-swiper :banners="banners"/>
-    <!--推荐视图-->
-    <home-recommend-view :recommends="recommends"/>
-    <!--本周流行-->
-    <home-feature-view/>
-    <!--'流行','新款','精选'-->
-    <tab-control class="tab-control"
-                 :titles="['流行','新款','精选']"
-                  @tabClick="tabClick"/>
-    <goods-list :goods="showGoods"/>
+
+    <scroll class="content">
+      <!--轮播图-->
+      <home-swiper :banners="banners"/>
+      <!--推荐视图-->
+      <home-recommend-view :recommends="recommends"/>
+      <!--本周流行-->
+      <home-feature-view/>
+      <!--'流行','新款','精选'-->
+      <tab-control class="tab-control"
+                   :titles="['流行','新款','精选']"
+                   @tabClick="tabClick"/>
+      <goods-list :goods="showGoods"/>
+    </scroll>
 
   </div>
 </template>
@@ -33,10 +36,12 @@
     getHomeMultidata,
     getHomeGoods
   } from "network/home";
+  import Scroll from "../../components/common/scroll/Scroll";
 
   export default {
     name: "Home",
     components: {
+      Scroll,
       HomeSwiper,
       HomeRecommendView,
       HomeFeatureView,
@@ -51,9 +56,9 @@
         banners: [],
         recommends: [],
         goods: {
-          'pop': {page: 0,list: []},
-          'new': {page: 0,list: []},
-          'sell': {page: 0,list: []},
+          'pop': {page: 0, list: []},
+          'new': {page: 0, list: []},
+          'sell': {page: 0, list: []},
         },
         currentType: 'pop'
       }
@@ -107,7 +112,7 @@
 
       getHomeGoods(type) {
         const page = this.goods[type].page + 1
-        getHomeGoods(type,page).then(res => {
+        getHomeGoods(type, page).then(res => {
           // console.info(res)
           // 把后面的数组依次放入前面的,把查询出来的数据保存
           this.goods[type].list.push(...res.data.list)
@@ -124,6 +129,10 @@
 <style scoped>
   #home {
     padding-top: 44px;
+    /*vh viewport height 视口高度*/
+    height: 100vh;
+    /*子绝父相*/
+    position: relative;
   }
 
   .home {
@@ -143,5 +152,15 @@
     position: sticky;
     top: 44px;
     z-index: 3;
+  }
+
+  /*确定内容高度*/
+  .content {
+    overflow: hidden;
+    position: absolute;
+    top: 44px;
+    bottom: 80px;
+    left: 0;
+    right: 0;
   }
 </style>
