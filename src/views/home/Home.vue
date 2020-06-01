@@ -8,7 +8,9 @@
     <scroll class="content"
             ref="scroll"
             :probe-type="3"
-            @scroll="contentScroll">
+            @scroll="contentScroll"
+            :pull-up-load="true"
+            @pullingUp="loadMore">
       <!--轮播图-->
       <home-swiper :banners="banners"/>
       <!--推荐视图-->
@@ -68,7 +70,9 @@
           'new': {page: 0, list: []},
           'sell': {page: 0, list: []},
         },
+        // 当前类型
         currentType: 'pop',
+        // 是否显示回到顶部属性
         isShowBackTop: false
       }
     },
@@ -116,9 +120,13 @@
 
       contentScroll(position) {
         // console.log(position);
+        // 大于1000的时候显示
         this.isShowBackTop = (-position.y) > 1000
       },
 
+      loadMore() {
+        this.getHomeGoods(this.currentType)
+      },
       /**
        * network request methods
        */
@@ -138,6 +146,9 @@
           this.goods[type].list.push(...res.data.list)
           // 因为加了数据,所以页码要加1
           this.goods[type].page += 1
+
+          // 为了再次下拉更多
+          this.$refs.scroll.finishPullUp()
         })
       },
 

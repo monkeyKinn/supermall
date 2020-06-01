@@ -124,7 +124,7 @@
          *  3:只要是滚动就侦测
          */
         probeType: 3,
-        //上拉加载更多,注意:在一次请求完了后,需要调用finishPullup方法
+        //上拉加载更多,注意:在一次请求完了后,需要在网络请求的那个方法最后一行,调用finishPullup方法
         pullUpLoad: true
       })
 
