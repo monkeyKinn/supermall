@@ -95,10 +95,11 @@
     },
 
     mounted() {
+      // 防抖封装
+      const refresh = this.debounce(this.$refs.scroll.refresh,500)
       // 3.监听事件总线中图片加载完成事件
       this.$bus.$on('itemImageLoaded', () => {
-        console.log('----');
-        this.$refs.scroll.refresh()
+        refresh()
       })
     },
 
@@ -107,6 +108,19 @@
       /**
        * 事件监听
        */
+      // 防抖
+      debounce(func,delay) {
+        let timer = null
+        return function (...args) {
+          // 有值就清除
+          if (timer) clearTimeout(timer)
+
+          timer = setTimeout(() => {
+            func.apply(this,args)
+          },delay)
+        }
+      },
+
       tabClick(index) {
         switch (index) {
           case 0 :
