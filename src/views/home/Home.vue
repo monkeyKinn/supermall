@@ -11,8 +11,10 @@
     <!--本周流行-->
     <home-feature-view/>
     <!--'流行','新款','精选'-->
-    <tab-control class="tab-control" :titles="['流行','新款','精选']"/>
-    <goods-list :goods="goods['pop'].list"/>
+    <tab-control class="tab-control"
+                 :titles="['流行','新款','精选']"
+                  @tabClick="tabClick"/>
+    <goods-list :goods="showGoods"/>
     <ul>
       <li>213</li>
       <li>213</li>
@@ -153,10 +155,16 @@
           'pop': {page: 0,list: []},
           'new': {page: 0,list: []},
           'sell': {page: 0,list: []},
-        }
+        },
+        currentType: 'pop'
       }
     },
-
+    computed: {
+      // 计算属性,因为直接写太长了
+      showGoods() {
+        return this.goods[this.currentType].list
+      }
+    },
     // 只写主要逻辑
     created() {
       // 组件刚加载完就发送网络请求,请求首页多个展示数据,加个()表示调用函数
@@ -169,6 +177,27 @@
     },
 
     methods: {
+
+      /**
+       * 事件监听
+       */
+      tabClick(index) {
+        switch (index) {
+          case 0 :
+            this.currentType = 'pop'
+            break
+          case 1 :
+            this.currentType = 'new'
+            break
+          case 2 :
+            this.currentType = 'sell'
+            break
+        }
+      },
+
+      /**
+       * network request methods
+       */
       getHomeMultidata() {
         getHomeMultidata().then(res => {
           // console.log(res);
@@ -186,7 +215,9 @@
           // 因为加了数据,所以页码要加1
           this.goods[type].page += 1
         })
-      }
+      },
+
+
     }
   }
 </script>
