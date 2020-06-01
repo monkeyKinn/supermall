@@ -81,18 +81,22 @@
         return this.goods[this.currentType].list
       }
     },
+
     // 只写主要逻辑
     created() {
-      // 组件刚加载完就发送网络请求,请求首页多个展示数据,加个()表示调用函数
+      // 1.组件刚加载完就发送网络请求,请求首页多个展示数据,加个()表示调用函数
       this.getHomeMultidata()
 
-      // 初始化请求商品数据
+      // 2.初始化请求商品数据
       this.getHomeGoods('pop')
       this.getHomeGoods('new')
       this.getHomeGoods('sell')
 
-      // 监听事件总线中图片加载完成事件
-      this.$bus.$on('itemImageLoaded',() => {
+    },
+
+    mounted() {
+      // 3.监听事件总线中图片加载完成事件
+      this.$bus.$on('itemImageLoaded', () => {
         console.log('----');
         this.$refs.scroll.refresh()
       })
@@ -120,7 +124,7 @@
       backTop() {
         console.log('b 2 t');
         // 在500ms内回到顶部
-        this.$refs.scroll.scrollTo(0,0,500)
+        this.$refs.scroll.scrollTo(0, 0, 500)
       },
 
       contentScroll(position) {
