@@ -12,6 +12,7 @@
     <home-feature-view/>
     <!--'流行','新款','精选'-->
     <tab-control class="tab-control" :titles="['流行','新款','精选']"/>
+    <goods-list :goods="goods['pop'].list"/>
     <ul>
       <li>213</li>
       <li>213</li>
@@ -124,6 +125,7 @@
 
   import Navbar from "components/common/navbar/Navbar";
   import TabControl from "components/content/tabControl/TabControl";
+  import GoodsList from "components/content/goods/goodsList";
 
   // home的网络请求,因为没有用default导出所以这里要用大括号
   import {
@@ -139,7 +141,8 @@
       HomeFeatureView,
 
       Navbar,
-      TabControl
+      TabControl,
+      GoodsList
     },
     data() {
       return {
