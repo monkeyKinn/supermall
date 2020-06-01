@@ -9,8 +9,7 @@
             ref="scroll"
             :probe-type="3"
             @scroll="contentScroll"
-            :pull-up-load="true"
-            @pullingUp="loadMore">
+            :pull-up-load="true">
       <!--轮播图-->
       <home-swiper :banners="banners"/>
       <!--推荐视图-->
@@ -91,6 +90,12 @@
       this.getHomeGoods('pop')
       this.getHomeGoods('new')
       this.getHomeGoods('sell')
+
+      // 监听事件总线中图片加载完成事件
+      this.$bus.$on('itemImageLoaded',() => {
+        console.log('----');
+        this.$refs.scroll.refresh()
+      })
     },
 
     methods: {
@@ -124,15 +129,14 @@
         this.isShowBackTop = (-position.y) > 1000
       },
 
-      loadMore() {
-        this.getHomeGoods(this.currentType)
-      },
+      // loadMore() {
+      //   this.getHomeGoods(this.currentType)
+      // },
       /**
        * network request methods
        */
       getHomeMultidata() {
         getHomeMultidata().then(res => {
-          // console.log(res);
           this.banners = res.data.banner.list
           this.recommends = res.data.recommend.list
         })
@@ -147,8 +151,8 @@
           // 因为加了数据,所以页码要加1
           this.goods[type].page += 1
 
-          // 为了再次下拉更多
-          this.$refs.scroll.finishPullUp()
+          // // 为了再次下拉更多
+          // this.$refs.scroll.finishPullUp()
         })
       },
 

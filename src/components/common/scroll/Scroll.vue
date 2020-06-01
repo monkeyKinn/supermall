@@ -17,10 +17,10 @@
         type: Number,
         default: 0
       },
-      pullUpLoad: {
-        type: Boolean,
-        default: false
-      }
+      // pullUpLoad: {
+      //   type: Boolean,
+      //   default: false
+      // }
     },
     data() {
       return {
@@ -43,18 +43,23 @@
         this.$emit('scroll', position)
       })
 
-      // 3.监听上拉事件
-      this.scroll.on('pullingUp', () => {
-        this.$emit('pullingUp')
-      })
+      // // 3.监听上拉事件
+      // this.scroll.on('pullingUp', () => {
+      //   this.$emit('pullingUp')
+      // })
+
+
     },
     methods: {
       scrollTo(x, y, time = 300) {
         // 回到顶部,第三个参数是所用时间
         this.scroll.scrollTo(x, y, time)
       },
-      finishPullUp()  {
+      finishPullUp() {
         this.scroll.finishPullUp()
+      },
+      refresh() {
+        this.scroll.refresh()
       }
     }
   }

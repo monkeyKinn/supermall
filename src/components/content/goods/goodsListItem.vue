@@ -1,6 +1,7 @@
 <template>
   <div class="goods-item">
-    <img :src="goodsItem.show.img" alt="21">
+    <!-- Vue中的@load="imgLoaded"监听图片加载函数-->
+    <img :src="goodsItem.show.img" alt="21" @load="imgLoaded">
     <div class="goods-info">
       <p>{{goodsItem.title}}</p>
       <span class="price">{{goodsItem.price}}</span>
@@ -18,6 +19,12 @@
         default() {
           return {}
         }
+      }
+    },
+    methods: {
+      imgLoaded() {
+        // 发射事件总线事件
+        this.$bus.$emit('itemImageLoaded')
       }
     }
   }
