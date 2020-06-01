@@ -5,6 +5,11 @@
       <div slot="center">セックスコンビニ</div>
     </navbar>
 
+    <tab-control :titles="['流行','新款','精选']"
+                 @tabClick="tabClick"
+                 ref="tabControl1"
+                 class="tab-control" v-show="isTabFixed"/>
+
     <scroll class="content"
             ref="scroll"
             :probe-type="3"
@@ -12,15 +17,15 @@
             :pull-up-load="true"
             @pullingUp="loadMore">
       <!--轮播图-->
-      <home-swiper :banners="banners"/>
+      <home-swiper :banners="banners" @swapperImageLoaded="swapperImageLoaded"/>
       <!--推荐视图-->
       <home-recommend-view :recommends="recommends"/>
       <!--本周流行-->
       <home-feature-view/>
       <!--'流行','新款','精选'-->
-      <tab-control class="tab-control"
-                   :titles="['流行','新款','精选']"
-                   @tabClick="tabClick"/>
+      <tab-control :titles="['流行','新款','精选']"
+                   @tabClick="tabClick"
+                   ref="tabControl2"/>
       <goods-list :goods="showGoods"/>
     </scroll>
 
@@ -75,7 +80,9 @@
         // 当前类型
         currentType: 'pop',
         // 是否显示回到顶部属性
-        isShowBackTop: false
+        isShowBackTop: false,
+        tabOffsetTop: 0,
+        isTabFixed: false
       }
     },
     computed: {
@@ -104,6 +111,11 @@
       this.$bus.$on('itemImageLoaded', () => {
         refresh()
       })
+
+      // 加载完成的时间监听 获取tabControl的offSetTop
+      // 所有的组件都有一个属性 $el,用于获取组件内的元素
+      // console.log(this.$refs.tabControl.$el.offsetTop);
+      // this.tabOffsetTop = this.$refs.tabControl.$el.offsetTop
     },
 
     methods: {
@@ -111,8 +123,6 @@
       /**
        * 事件监听
        */
-
-
       tabClick(index) {
         switch (index) {
           case 0 :
@@ -125,6 +135,9 @@
             this.currentType = 'sell'
             break
         }
+        // 解决吸顶按钮不一致
+        this.$refs.tabControl1.currentIndex = index
+        this.$refs.tabControl2.currentIndex = index
       },
 
       backTop() {
@@ -135,14 +148,25 @@
 
       contentScroll(position) {
         // console.log(position);
-        // 大于1000的时候显示
+        // 大于1000的时候backTop显示,
         this.isShowBackTop = (-position.y) > 1000
+
+        // 决定tabControl是否吸顶(position:fixed)
+        this.isTabFixed = (-position.y) > this.tabOffsetTop
+
       },
 
       loadMore() {
         console.log('加载更多');
         this.getHomeGoods(this.currentType)
       },
+
+      swapperImageLoaded() {
+        // console.log(this.$refs.tabControl2.$el.offsetTop);
+        // 计算高度,轮播图加载完后计算
+        this.tabOffsetTop = this.$refs.tabControl2.$el.offsetTop
+      },
+
       /**
        * network request methods
        */
@@ -174,7 +198,7 @@
 
 <style scoped>
   #home {
-    padding-top: 44px;
+    /*padding-top: 44px;*/
     /*vh viewport height 视口高度*/
     height: 100vh;
     /*子绝父相*/
@@ -185,20 +209,21 @@
     background: var(--color-tint);
     color: var(--color-background);
 
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
-    z-index: 3;
+    /*在使用浏览器原生滚动时,为了让导航不跟随一起滚动*/
+    /*position: fixed;*/
+    /*left: 0;*/
+    /*right: 0;*/
+    /*top: 0;*/
+    /*z-index: 3;*/
 
   }
 
-  /*简单的吸顶功能*/
-  .tab-control {
-    position: sticky;
-    top: 44px;
-    z-index: 3;
-  }
+  /*!*简单的吸顶功能*!*/
+  /*.tab-control {*/
+    /*position: sticky;*/
+    /*top: 44px;*/
+    /*z-index: 3;*/
+  /*}*/
 
   /*确定内容高度*/
   .content {
@@ -208,5 +233,10 @@
     bottom: 80px;
     left: 0;
     right: 0;
+  }
+
+  .tab-control {
+    position: relative;
+    z-index: 3;
   }
 </style>
