@@ -180,7 +180,7 @@
       getHomeGoods(type) {
         const page = this.goods[type].page + 1
         getHomeGoods(type,page).then(res => {
-          console.info(res)
+          // console.info(res)
           // 把后面的数组依次放入前面的,把查询出来的数据保存
           this.goods[type].list.push(...res.data.list)
           // 因为加了数据,所以页码要加1
@@ -212,5 +212,6 @@
   .tab-control {
     position: sticky;
     top: 44px;
+    z-index: 3;
   }
 </style>
