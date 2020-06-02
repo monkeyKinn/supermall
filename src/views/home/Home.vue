@@ -82,7 +82,8 @@
         // 是否显示回到顶部属性
         isShowBackTop: false,
         tabOffsetTop: 0,
-        isTabFixed: false
+        isTabFixed: false,
+        saveY: 0
       }
     },
     computed: {
@@ -106,7 +107,7 @@
 
     mounted() {
       // 防抖封装
-      const refresh = debounce(this.$refs.scroll.refresh,500)
+      const refresh = debounce(this.$refs.scroll.refresh, 500)
       // 3.监听事件总线中图片加载完成事件
       this.$bus.$on('itemImageLoaded', () => {
         refresh()
@@ -117,7 +118,14 @@
       // console.log(this.$refs.tabControl.$el.offsetTop);
       // this.tabOffsetTop = this.$refs.tabControl.$el.offsetTop
     },
-
+    activated() {//活跃 -> 进来
+      this.$refs.scroll.scrollTo(0,this.saveY,0)
+      //要刷新一下,避免回到顶部的问题
+      this.$refs.scroll.refresh()
+    },
+    deactivated() {//不活跃 -> 离开
+      this.saveY = this.$refs.scroll.getScrollY()
+    },
     methods: {
 
       /**
@@ -220,9 +228,9 @@
 
   /*!*简单的吸顶功能*!*/
   /*.tab-control {*/
-    /*position: sticky;*/
-    /*top: 44px;*/
-    /*z-index: 3;*/
+  /*position: sticky;*/
+  /*top: 44px;*/
+  /*z-index: 3;*/
   /*}*/
 
   /*确定内容高度*/

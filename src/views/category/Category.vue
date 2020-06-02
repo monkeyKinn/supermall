@@ -1,6 +1,6 @@
 <template>
-  <div class="wrapper">
-    <ul class="context">
+  <scroll class="wrapper">
+    <ul>
       <li>分类列表1</li>
       <li>分类列表2</li>
       <li>分类列表3</li>
@@ -102,42 +102,20 @@
       <li>分类列表99</li>
       <li>分类列表100</li>
     </ul>
-  </div>
+  </scroll>
 </template>
 
 <script>
-  import BScroll from 'better-scroll'
-
+  import Scroll from "../../components/common/scroll/Scroll";
   export default {
     name: "Category",
+    components: {Scroll},
     data() {
       return {
         scroll: null
       }
     },
     mounted() {
-      this.scroll = new BScroll(document.querySelector('.wrapper'), {
-        /**
-         * 探测类型 实时监听
-         *  0和1都是不侦测实时位置
-         *  2:在手指滚动时侦测,手指离开因为惯性不侦测
-         *  3:只要是滚动就侦测
-         */
-        probeType: 3,
-        //上拉加载更多,注意:在一次请求完了后,需要在网络请求的那个方法最后一行,调用finishPullup方法
-        pullUpLoad: true
-      })
-
-      this.scroll.on('scroll',(position) => {
-        // console.log(position);
-      })
-
-      this.scroll.on('pullingUp', () => {
-        console.log('上啦加载更多');
-      })
-      setTimeout((()=>{
-        this.scroll.finishPullUp()
-      }),1000)
     },
   }
 </script>
