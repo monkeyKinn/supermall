@@ -150,7 +150,7 @@
       },
 
       backTop() {
-        console.log('b 2 t');
+        // console.log('b 2 t');
         // 在500ms内回到顶部
         this.$refs.scroll.scrollTo(0, 0, 500)
       },
