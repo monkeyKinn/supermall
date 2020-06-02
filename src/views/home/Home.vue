@@ -10,7 +10,7 @@
                  ref="tabControl1"
                  class="tab-control" v-show="isTabFixed"/>
 
-    <!--滚动区域-->
+    <!--TODO 滚动区域 第18行有问题 会导致下了多次 解决思路 控制下拉距离底部的位置-->
     <scroll class="content"
             ref="scroll"
             :probe-type="3"
@@ -113,19 +113,19 @@
       this.$bus.$on('itemImageLoaded', () => {
         refresh()
       })
-
-      // 加载完成的时间监听 获取tabControl的offSetTop
-      // 所有的组件都有一个属性 $el,用于获取组件内的元素
-      // console.log(this.$refs.tabControl.$el.offsetTop);
-      // this.tabOffsetTop = this.$refs.tabControl.$el.offsetTop
     },
     activated() {//活跃 -> 进来
-      this.$refs.scroll.scrollTo(0,this.saveY,0)
+      console.log('进来:' + this.saveY);
+      // setTimeout(() => {
+      //   this.$refs.scroll.scrollTo(0, this.saveY, 0)
+      // }, 0.1)
       //要刷新一下,避免回到顶部的问题
       this.$refs.scroll.refresh()
+      this.$refs.scroll.scrollTo(0, this.saveY, 0)
     },
     deactivated() {//不活跃 -> 离开
       this.saveY = this.$refs.scroll.getScrollY()
+      console.log('离开:' + this.saveY);
     },
     methods: {
 
@@ -150,13 +150,12 @@
       },
 
       backTop() {
-        // console.log('b 2 t');
         // 在500ms内回到顶部
+        console.log('backTop');
         this.$refs.scroll.scrollTo(0, 0, 500)
       },
 
       contentScroll(position) {
-        // console.log(position);
         // 大于1000的时候backTop显示,
         this.isShowBackTop = (-position.y) > 1000
 
@@ -166,12 +165,11 @@
       },
 
       loadMore() {
-        console.log('加载更多');
+        // console.log('加载更多');
         this.getHomeGoods(this.currentType)
       },
 
       swapperImageLoaded() {
-        // console.log(this.$refs.tabControl2.$el.offsetTop);
         // 计算高度,轮播图加载完后计算
         this.tabOffsetTop = this.$refs.tabControl2.$el.offsetTop
       },
@@ -189,7 +187,6 @@
       getHomeGoods(type) {
         const page = this.goods[type].page + 1
         getHomeGoods(type, page).then(res => {
-          // console.info(res)
           // 把后面的数组依次放入前面的,把查询出来的数据保存
           this.goods[type].list.push(...res.data.list)
           // 因为加了数据,所以页码要加1
