@@ -35,7 +35,11 @@
         // 监听滚动的区域 对应的属性
         probeType: this.probeType,
         // 监听上拉事件 对应的属性
-        pullUpLoad: this.pullUpLoad
+        pullUpLoad: this.pullUpLoad,
+        /*解决ios端拉下到最顶端回弹两次
+        官方播放器bug 地址 http://ustbhuangyi.com/music/#/recommend
+        解决方法:加上下面这个属性*/
+        useTransition:false
       })
 
       // 2.监听滚动的区域
