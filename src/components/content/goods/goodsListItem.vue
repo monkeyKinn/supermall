@@ -1,5 +1,5 @@
 <template>
-  <div class="goods-item">
+  <div class="goods-item" @click="itemClick">
     <!-- Vue中的@load="imgLoaded"监听图片加载函数-->
     <img :src="goodsItem.show.img" alt="21" @load="imgLoaded">
     <div class="goods-info">
@@ -25,6 +25,9 @@
       imgLoaded() {
         // 发射事件总线事件
         this.$bus.$emit('itemImageLoaded')
+      },
+      itemClick() {
+        this.$router.push('/detail/'+this.goodsItem.iid)
       }
     }
   }
