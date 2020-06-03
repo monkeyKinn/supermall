@@ -58,7 +58,7 @@
     },
     methods: {
       scrollTo(x, y, time = 300) {
-        // 回到顶部,第三个参数是所用时间
+        // 回到指定位置,第三个参数是所用时间
         this.scroll && this.scroll.scrollTo(x, y, time)
       },
       finishPullUp() {

@@ -119,9 +119,9 @@
       // setTimeout(() => {
       //   this.$refs.scroll.scrollTo(0, this.saveY, 0)
       // }, 0.1)
+      this.$refs.scroll.scrollTo(0, this.saveY, 0)
       //要刷新一下,避免回到顶部的问题
       this.$refs.scroll.refresh()
-      this.$refs.scroll.scrollTo(0, this.saveY, 0)
     },
     deactivated() {//不活跃 -> 离开
       this.saveY = this.$refs.scroll.getScrollY()
