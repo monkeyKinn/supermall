@@ -8,6 +8,7 @@
       <div class="shop-middle-item shop-middle-left">
         <div class="info-sells">
           <div class="sells-count">
+            <!--过滤器-->
             {{shop.sells | sellCountFilter}}
           </div>
           <div class="sells-text">总销量</div>
