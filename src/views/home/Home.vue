@@ -124,8 +124,11 @@
       this.$refs.scroll.refresh()
     },
     deactivated() {//不活跃 -> 离开
+      // 1.保存y坐标
       this.saveY = this.$refs.scroll.getScrollY()
       console.log('离开:' + this.saveY);
+      // 2.取消全局事件监听
+      this.$bus.$off('itemImageLoaded',)
     },
     methods: {
 
