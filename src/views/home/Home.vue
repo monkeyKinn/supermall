@@ -53,7 +53,7 @@
     getHomeGoods
   } from "network/home";
 
-  import {debounce} from 'common/utils'
+  import {itemListenerMixin} from "common/mixin";
 
   export default {
     name: "Home",
@@ -68,6 +68,7 @@
       Scroll,
       BackTop
     },
+    mixins: [itemListenerMixin],
     data() {
       return {
         // 保存getHomeMultidata()的res
@@ -106,14 +107,7 @@
 
     },
 
-    mounted() {
-      // 防抖封装
-      const refresh = debounce(this.$refs.scroll.refresh, 500)
-      // 3.监听事件总线中图片加载完成事件
-      this.$bus.$on('itemImageLoaded', () => {
-        refresh()
-      })
-    },
+    mounted() {},
     activated() {//活跃 -> 进来
       console.log('进来:' + this.saveY);
       // setTimeout(() => {
@@ -128,7 +122,7 @@
       this.saveY = this.$refs.scroll.getScrollY()
       console.log('离开:' + this.saveY);
       // 2.取消全局事件监听
-      this.$bus.$off('itemImageLoaded',)
+      this.$bus.$off('itemImageLoaded',this.itemImgListListener)
     },
     methods: {
 

@@ -27,6 +27,8 @@
   import Scroll from "components/common/scroll/Scroll";
   import GoodsList from "components/content/goods/goodsList";
 
+  import {itemListenerMixin} from "common/mixin";
+
   export default {
     name: "Detail",
     components: {
@@ -40,6 +42,7 @@
       DetailParamInfo,
       DetailCommentInfo
     },
+    mixins: [itemListenerMixin],
     data() {
       return {
         iid: null,
@@ -86,6 +89,10 @@
       imageLoad() {
         this.$refs.scroll.refresh()
       }
+    },
+    mounted() {},
+    destroyed() {
+      this.$bus.$off('itemImgLoad', this.itemImgListListener)
     }
   }
 </script>
