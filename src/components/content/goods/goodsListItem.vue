@@ -35,7 +35,7 @@
         if (this.goodsItem.iid) {
           this.$router.push('/detail/' + this.goodsItem.iid)
         }else {
-          alert('没有真实地址可跳啦~~')
+          alert('没有真实地址可跳啦~~~')
         }
       }
     }
