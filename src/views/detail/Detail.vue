@@ -1,14 +1,14 @@
 <template>
   <div id="detail">
-    <detail-nav-bar class="detail-nav"/>
+    <detail-nav-bar class="detail-nav" @titleClick="titleClick"/>
     <scroll class="content" ref="scroll">
       <detail-swiper :top-images="topImages"/>
       <detail-base-info :goods="goods"/>
       <detail-shop-info :shop="shop"/>
-      <detail-goods-info :detail-info="detailInfo" @imageLoad="imageLoad"/>
-      <detail-param-info :param-info="paramInfo"/>
-      <detail-comment-info :comment-info="commentInfo"/>
-      <goods-list :goods="recommends"/>
+      <detail-goods-info :detail-info="detailInfo" @imageLoad="imageLoadAll"/>
+      <detail-param-info ref="params" :param-info="paramInfo"/>
+      <detail-comment-info ref="comment" :comment-info="commentInfo"/>
+      <goods-list ref="recommend" :goods="recommends"/>
     </scroll>
   </div>
 </template>
@@ -28,6 +28,7 @@
   import GoodsList from "components/content/goods/goodsList";
 
   import {itemListenerMixin} from "common/mixin";
+  import {debounce} from "../../common/utils";
 
   export default {
     name: "Detail",
@@ -52,7 +53,9 @@
         detailInfo: {},
         paramInfo: {},
         commentInfo: {},
-        recommends: []
+        recommends: [],
+        themeTopYs: [],
+        getThemeTopY: null
       }
     },
     created() {
@@ -80,11 +83,24 @@
       getRecommend().then(res => {
         this.recommends = res.data.list
       })
+      // 4.给getThemeTopY赋值 给this.getThemeTopY 防抖
+      this.getThemeTopY = debounce(() =>{
+        this.themeTopYs = []
+        this.themeTopYs.push(0);
+        this.themeTopYs.push(this.$refs.params.$el.offsetTop);
+        this.themeTopYs.push(this.$refs.comment.$el.offsetTop);
+        this.themeTopYs.push(this.$refs.recommend.$el.offsetTop);
+        console.log(this.themeTopYs)
+      },500)
     },
     methods: {
       // 加载完图片后刷新
-      imageLoad() {
+      imageLoadAll() {
         this.refreshed()
+        this.getThemeTopY()
+      },
+      titleClick(index) {
+        this.$refs.scroll.scrollTo(0,-this.themeTopYs[index],500)
       }
     },
     mounted() {},

@@ -109,7 +109,7 @@
 
     mounted() {},
     activated() {//活跃 -> 进来
-      console.log('进来:' + this.saveY);
+      // console.log('进来:' + this.saveY);
       // setTimeout(() => {
       //   this.$refs.scroll.scrollTo(0, this.saveY, 0)
       // }, 0.1)
@@ -120,7 +120,7 @@
     deactivated() {//不活跃 -> 离开
       // 1.保存y坐标
       this.saveY = this.$refs.scroll.getScrollY()
-      console.log('离开:' + this.saveY);
+      // console.log('离开:' + this.saveY);
       // 2.取消全局事件监听
       this.$bus.$off('itemImageLoaded',this.itemImgListListener)
     },
@@ -148,7 +148,7 @@
 
       backTop() {
         // 在500ms内回到顶部
-        console.log('backTop');
+        // console.log('backTop');
         this.$refs.scroll.scrollTo(0, 0, 500)
       },
 
