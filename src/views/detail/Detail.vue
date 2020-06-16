@@ -1,7 +1,7 @@
 <template>
   <div id="detail">
-    <detail-nav-bar class="detail-nav" @titleClick="titleClick"/>
-    <scroll class="content" ref="scroll">
+    <detail-nav-bar class="detail-nav" @titleClick="titleClick" ref="nav"/>
+    <scroll class="content" ref="scroll" @scroll="contentScroll" :probe-type="3">
       <detail-swiper :top-images="topImages"/>
       <detail-base-info :goods="goods"/>
       <detail-shop-info :shop="shop"/>
@@ -55,7 +55,8 @@
         commentInfo: {},
         recommends: [],
         themeTopYs: [],
-        getThemeTopY: null
+        getThemeTopY: null,
+        currentIndex: 0
       }
     },
     created() {
@@ -75,7 +76,7 @@
         // 2.5 获取商品参数信息
         this.paramInfo = new GoodsParam(data.itemParams.info, data.itemParams.rule)
         // 2.6 取出评论信息
-        if(data.rate.cRate !== 0){
+        if (data.rate.cRate !== 0) {
           this.commentInfo = data.rate.list[0]
         }
       })
@@ -84,26 +85,42 @@
         this.recommends = res.data.list
       })
       // 4.给getThemeTopY赋值 给this.getThemeTopY 防抖
-      this.getThemeTopY = debounce(() =>{
+      this.getThemeTopY = debounce(() => {
         this.themeTopYs = []
         this.themeTopYs.push(0);
         this.themeTopYs.push(this.$refs.params.$el.offsetTop);
         this.themeTopYs.push(this.$refs.comment.$el.offsetTop);
         this.themeTopYs.push(this.$refs.recommend.$el.offsetTop);
         console.log(this.themeTopYs)
-      },500)
+      }, 500)
     },
     methods: {
       // 加载完图片后刷新
       imageLoadAll() {
         this.refreshed()
+        // 获取各个主题的offsetTop
         this.getThemeTopY()
       },
       titleClick(index) {
-        this.$refs.scroll.scrollTo(0,-this.themeTopYs[index],500)
+        this.$refs.scroll.scrollTo(0, -this.themeTopYs[index], 500)
+      },
+      contentScroll(position) {
+        // 获取y
+        const positionY = -position.y
+        // positionY 和主题中的对比
+        let length = this.themeTopYs.length
+        for (let kin = 0; kin < length; kin++) {
+          if (this.currentIndex !== kin && ((kin < length - 1 && (positionY >= this.themeTopYs[kin] && positionY < this.themeTopYs[kin + 1])) ||
+              (kin === length - 1 && positionY >= this.themeTopYs[kin]))) {
+            this.currentIndex = kin;
+            console.log(this.currentIndex);
+            this.$refs.nav.currentIndex = this.currentIndex
+          }
+        }
       }
     },
-    mounted() {},
+    mounted() {
+    },
     destroyed() {
       this.$bus.$off('itemImgLoad', this.itemImgListListener)
     }
