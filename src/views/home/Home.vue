@@ -10,7 +10,7 @@
                  ref="tabControl1"
                  class="tab-control" v-show="isTabFixed"/>
 
-    <!--TODO 滚动区域 第18行有问题 会导致下了多次 解决思路 控制下拉距离底部的位置-->
+
     <scroll class="content"
             ref="scroll"
             :probe-type="3"

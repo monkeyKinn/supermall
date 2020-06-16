@@ -78,16 +78,13 @@
       })
       // 3.请求推荐数据
       getRecommend().then(res => {
-        console.log(res)
         this.recommends = res.data.list
-        console.log(this.recommends)
-
       })
     },
     methods: {
       // 加载完图片后刷新
       imageLoad() {
-        this.$refs.scroll.refresh()
+        this.refreshed()
       }
     },
     mounted() {},
