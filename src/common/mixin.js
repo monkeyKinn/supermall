@@ -28,7 +28,7 @@ export const backTopMixin = {
   data() {
     return {
       // 是否显示回到顶部属性
-      isShowBackTop: true
+      isShowBackTop: false
     }
   },
   methods: {
