@@ -10,6 +10,7 @@
       <detail-comment-info ref="comment" :comment-info="commentInfo"/>
       <goods-list ref="recommend" :goods="recommends"/>
     </scroll>
+    <detail-button-bar/>
   </div>
 </template>
 
@@ -29,10 +30,12 @@
 
   import {itemListenerMixin} from "common/mixin";
   import {debounce} from "../../common/utils";
+  import DetailButtonBar from "./childComps/DetailButtonBar";
 
   export default {
     name: "Detail",
     components: {
+      DetailButtonBar,
       Scroll,
       GoodsList,
       DetailShopInfo,
@@ -147,6 +150,6 @@
 
   /*添加bs滚动*/
   .content {
-    height: calc(100% - 44px);
+    height: calc(100% - 44px - 50px);
   }
 </style>
