@@ -2,7 +2,6 @@
   <div id="detail">
     <detail-nav-bar class="detail-nav" @titleClick="titleClick" ref="nav"/>
     <scroll class="content" ref="scroll" @scroll="contentScroll" :probe-type="3">
-      <div>{{$store.state.cartList.length}}</div>
       <detail-swiper :top-images="topImages"/>
       <detail-base-info :goods="goods"/>
       <detail-shop-info :shop="shop"/>
@@ -123,7 +122,6 @@
           // if (this.currentIndex !== kin && ((kin < length - 1 && (positionY >= this.themeTopYs[kin] && positionY < this.themeTopYs[kin + 1])) ||
           if (this.currentIndex !== kin && (positionY >= this.themeTopYs[kin] && positionY < this.themeTopYs[kin+1])) {
             this.currentIndex = kin;
-            console.log(this.currentIndex);
             this.$refs.nav.currentIndex = this.currentIndex
           }
         }
@@ -136,8 +134,10 @@
         product.desc = this.goods.desc
         product.price = this.goods.realPrice
         product.iid = this.iid
-        // 添加到购物车
-        this.$store.commit('addCart',product)
+        // 添加到购物车,mutations,提交到mutations
+        // this.$store.commit('addCart',product)
+        // 添加到购物车,actions 分发到action
+        this.$store.dispatch('addCart',product)
       }
     },
     mounted() {
