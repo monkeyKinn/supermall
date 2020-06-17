@@ -10,7 +10,7 @@
       <detail-comment-info ref="comment" :comment-info="commentInfo"/>
       <goods-list ref="recommend" :goods="recommends"/>
     </scroll>
-    <detail-button-bar/>
+    <detail-button-bar @addCart="add2Cart"/>
     <!--组件监听点击事件要加native属性-->
     <back-top @click.native="backTop" v-show="isShowBackTop" class="back-top"/>
   </div>
@@ -126,6 +126,17 @@
             this.$refs.nav.currentIndex = this.currentIndex
           }
         }
+      },
+      add2Cart() {
+        // 获取购物车需要展示的信息
+        const product = {}
+        product.image = this.topImages[0]
+        product.title = this.goods.title
+        product.desc = this.goods.desc
+        product.price = this.goods.realPrice
+        product.iid = this.iid
+        // 添加到购物车
+
       }
     },
     mounted() {

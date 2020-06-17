@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="bar-item bar-right">
-      <div class="car">加入购物车</div>
+      <div class="car" @click="add2Cart">加入购物车</div>
       <div class="buy">购买</div>
     </div>
   </div>
@@ -23,7 +23,12 @@
 
 <script>
   export default {
-    name: "DetailButtonBar"
+    name: "DetailButtonBar",
+    methods: {
+      add2Cart() {
+        this.$emit('addCart')
+      }
+    }
   }
 </script>
 
@@ -70,7 +75,7 @@
   .bar-right {
     font-size: 15px;
     color: #fff;
-    line-height: 58px;
+    line-height: 50px;
   }
 
   .bar-right .car {
