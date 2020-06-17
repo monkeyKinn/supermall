@@ -2,6 +2,7 @@
   <div id="detail">
     <detail-nav-bar class="detail-nav" @titleClick="titleClick" ref="nav"/>
     <scroll class="content" ref="scroll" @scroll="contentScroll" :probe-type="3">
+      <div>{{$store.state.cartList.length}}</div>
       <detail-swiper :top-images="topImages"/>
       <detail-base-info :goods="goods"/>
       <detail-shop-info :shop="shop"/>
@@ -136,7 +137,7 @@
         product.price = this.goods.realPrice
         product.iid = this.iid
         // 添加到购物车
-
+        this.$store.commit('addCart',product)
       }
     },
     mounted() {
