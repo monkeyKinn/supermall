@@ -91,6 +91,8 @@
         this.themeTopYs.push(this.$refs.params.$el.offsetTop);
         this.themeTopYs.push(this.$refs.comment.$el.offsetTop);
         this.themeTopYs.push(this.$refs.recommend.$el.offsetTop);
+          // 为了简化判断条件,加一个最大值用于判断
+        this.themeTopYs.push(Number.MAX_VALUE);
         console.log(this.themeTopYs)
       }, 500)
     },
@@ -109,9 +111,9 @@
         const positionY = -position.y
         // positionY 和主题中的对比
         let length = this.themeTopYs.length
-        for (let kin = 0; kin < length; kin++) {
-          if (this.currentIndex !== kin && ((kin < length - 1 && (positionY >= this.themeTopYs[kin] && positionY < this.themeTopYs[kin + 1])) ||
-              (kin === length - 1 && positionY >= this.themeTopYs[kin]))) {
+        for (let kin = 0; kin < length-1; kin++) {
+          // if (this.currentIndex !== kin && ((kin < length - 1 && (positionY >= this.themeTopYs[kin] && positionY < this.themeTopYs[kin + 1])) ||
+          if (this.currentIndex !== kin && (positionY >= this.themeTopYs[kin] && positionY < this.themeTopYs[kin+1])) {
             this.currentIndex = kin;
             console.log(this.currentIndex);
             this.$refs.nav.currentIndex = this.currentIndex
