@@ -45,7 +45,6 @@
   import TabControl from "components/content/tabControl/TabControl";
   import GoodsList from "components/content/goods/goodsList";
   import Scroll from "components/common/scroll/Scroll";
-  import BackTop from "components/content/backTop/BackTop";
 
   // home的网络请求,因为没有用default导出所以这里要用大括号
   import {
@@ -53,7 +52,7 @@
     getHomeGoods
   } from "network/home";
 
-  import {itemListenerMixin} from "common/mixin";
+  import {itemListenerMixin,backTopMixin} from "common/mixin";
 
   export default {
     name: "Home",
@@ -65,10 +64,9 @@
       Navbar,
       TabControl,
       GoodsList,
-      Scroll,
-      BackTop
+      Scroll
     },
-    mixins: [itemListenerMixin],
+    mixins: [itemListenerMixin,backTopMixin],
     data() {
       return {
         // 保存getHomeMultidata()的res
@@ -81,8 +79,6 @@
         },
         // 当前类型
         currentType: 'pop',
-        // 是否显示回到顶部属性
-        isShowBackTop: false,
         tabOffsetTop: 0,
         isTabFixed: false,
         saveY: 0
@@ -144,12 +140,6 @@
         // 解决吸顶按钮不一致
         this.$refs.tabControl1.currentIndex = index
         this.$refs.tabControl2.currentIndex = index
-      },
-
-      backTop() {
-        // 在500ms内回到顶部
-        // console.log('backTop');
-        this.$refs.scroll.scrollTo(0, 0, 500)
       },
 
       contentScroll(position) {

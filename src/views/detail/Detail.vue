@@ -11,6 +11,8 @@
       <goods-list ref="recommend" :goods="recommends"/>
     </scroll>
     <detail-button-bar/>
+    <!--组件监听点击事件要加native属性-->
+    <back-top @click.native="backTop" v-show="isShowBackTop" class="back-top"/>
   </div>
 </template>
 
@@ -28,7 +30,7 @@
   import Scroll from "components/common/scroll/Scroll";
   import GoodsList from "components/content/goods/goodsList";
 
-  import {itemListenerMixin} from "common/mixin";
+  import {itemListenerMixin,backTopMixin} from "common/mixin";
   import {debounce} from "../../common/utils";
   import DetailButtonBar from "./childComps/DetailButtonBar";
 
@@ -46,7 +48,7 @@
       DetailParamInfo,
       DetailCommentInfo
     },
-    mixins: [itemListenerMixin],
+    mixins: [itemListenerMixin,backTopMixin],
     data() {
       return {
         iid: null,
@@ -112,6 +114,8 @@
       contentScroll(position) {
         // 获取y
         const positionY = -position.y
+        // 大于1000的时候backTop显示,
+        this.isShowBackTop = positionY > 1000
         // positionY 和主题中的对比
         let length = this.themeTopYs.length
         for (let kin = 0; kin < length-1; kin++) {
@@ -151,5 +155,9 @@
   /*添加bs滚动*/
   .content {
     height: calc(100% - 44px - 50px);
+  }
+
+  .back-top {
+    bottom: 50px;
   }
 </style>
