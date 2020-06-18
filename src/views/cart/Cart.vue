@@ -1,21 +1,27 @@
 <template>
   <div class="cart">
+    <!--导航-->
     <navbar class="navBar">
       <div slot="center">购物车({{length}})</div>
     </navbar>
+
+    <!--列表-->
+    <cart-list/>
+
+    <!--底部汇总-->
   </div>
 </template>
 
 <script>
   import Navbar from "components/common/navbar/Navbar";
   import {mapGetters} from 'vuex'
+  import CartList from "./childComps/CartList";
+
   export default {
     name: "Cart",
-    components: {Navbar},
+    components: {CartList, Navbar},
     data() {
-      return {
-
-      }
+      return {}
     },
     computed: {
       // 两种语法
@@ -24,14 +30,16 @@
       // 自定义名字 用对象
       ...mapGetters({
         // 对应的就是length成为'计算属性'了
-        length :'cartLength',
-        list: 'cartList'
+        length: 'cartLength'
       })
     }
   }
 </script>
 
 <style scoped>
+  .cart {
+    height: 100vh;
+  }
   .navBar {
     background-color: var(--color-tint);
     color: #fff;
