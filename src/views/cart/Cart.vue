@@ -23,7 +23,7 @@
       // ...mapGetters(['cartLength','cartList'])
       // 自定义名字 用对象
       ...mapGetters({
-        // 对应的就是length了
+        // 对应的就是length成为'计算属性'了
         length :'cartLength',
         list: 'cartList'
       })
