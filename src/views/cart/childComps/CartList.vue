@@ -1,6 +1,6 @@
 <template>
   <div class="cart-list">
-    <scroll class="content">
+    <scroll class="content" ref="scroll">
       <cart-list-item v-for="(item,index) in cartList" :key="index" :product="item"/>
     </scroll>
   </div>
@@ -16,6 +16,10 @@
     components: {CartListItem, Scroll},
     computed: {
       ...mapGetters(['cartList'])
+    },
+    // 添加购物车后进行刷新,就是当组件活跃时刷新
+    activated() {
+      this.$refs.scroll.refresh()
     }
   }
 </script>
