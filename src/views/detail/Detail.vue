@@ -34,6 +34,7 @@
   import {debounce} from "../../common/utils";
   import DetailButtonBar from "./childComps/DetailButtonBar";
 
+  import {mapActions} from "vuex"
   export default {
     name: "Detail",
     components: {
@@ -102,6 +103,9 @@
       }, 500)
     },
     methods: {
+      ...mapActions({
+        add: 'addCart'
+      }),
       // 加载完图片后刷新
       imageLoadAll() {
         this.refreshed()
@@ -137,7 +141,12 @@
         // 添加到购物车,mutations,提交到mutations
         // this.$store.commit('addCart',product)
         // 添加到购物车,actions 分发到action
-        this.$store.dispatch('addCart',product)
+        // this.$store.dispatch('addCart',product).then(res => {
+        //   console.log(res)
+        // })
+        this.add(product).then(res => {
+          console.log(res)
+        })
       }
     },
     mounted() {
