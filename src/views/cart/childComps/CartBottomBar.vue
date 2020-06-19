@@ -1,7 +1,7 @@
 <template>
   <div class="bottom-bar">
     <div class="checkAll">
-      <check-button class="check-button"/>
+      <check-button :is-checked="isSelectAll" class="check-button"/>
       <span>全选</span>
     </div>
 
@@ -37,6 +37,11 @@
         ).reduce((preValue, item) => {
           return preValue + (item.count)
         }, 0)
+      },
+      isSelectAll() {
+        // return !(this.cartList.filter(item => !item.checked).length)
+        return (this.cartList.length === 0) ? false :
+                !this.cartList.find(item => !item.checked)
       }
     }
   }
