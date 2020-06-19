@@ -8,6 +8,7 @@
   export default {
     name: "CheckButton",
     props: {
+      // 子组件接受 父组件传过来的默认选中状态
       isChecked: {
         type: Boolean,
         default: false

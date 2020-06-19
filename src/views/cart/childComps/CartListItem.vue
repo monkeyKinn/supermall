@@ -1,7 +1,8 @@
 <template>
   <div id="shop-item">
     <div class="item-selector">
-      <check-button/>
+      // 把添加进购物车的默认选中状态传给子组件
+      <check-button :is-checked="itemInfo.checked" @click.native="checkClick"/>
     </div>
     <div class="item-img">
       <img :src="itemInfo.image" alt="商品图片">
@@ -28,6 +29,11 @@
         default() {
           return {}
         }
+      }
+    },
+    methods : {
+      checkClick() {
+        this.itemInfo.checked = !this.itemInfo.checked
       }
     }
   }
