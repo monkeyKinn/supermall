@@ -9,6 +9,7 @@
     <cart-list/>
 
     <!--底部汇总-->
+    <cart-bottom-bar/>
   </div>
 </template>
 
@@ -16,10 +17,11 @@
   import Navbar from "components/common/navbar/Navbar";
   import {mapGetters} from 'vuex'
   import CartList from "./childComps/CartList";
+  import CartBottomBar from "./childComps/CartBottomBar";
 
   export default {
     name: "Cart",
-    components: {CartList, Navbar},
+    components: {CartBottomBar, CartList, Navbar},
     data() {
       return {}
     },
