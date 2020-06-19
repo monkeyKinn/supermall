@@ -13,7 +13,7 @@
     <detail-button-bar @addCart="add2Cart"/>
     <!--组件监听点击事件要加native属性-->
     <back-top @click.native="backTop" v-show="isShowBackTop" class="back-top"/>
-    <toast :message="message" :show="show"/>
+<!--    <toast :message="message" :show="show"/>-->
   </div>
 </template>
 
@@ -36,12 +36,12 @@
   import DetailButtonBar from "./childComps/DetailButtonBar";
 
   import {mapActions} from "vuex"
-  import Toast from "../../components/common/toast/Toast";
+  // import Toast from "../../components/common/toast/Toast";
 
   export default {
     name: "Detail",
     components: {
-      Toast,
+      // Toast,
       DetailButtonBar,
       Scroll,
       GoodsList,
@@ -67,8 +67,8 @@
         themeTopYs: [],
         getThemeTopY: null,
         currentIndex: 0,
-        message: '',
-        show: false
+        // message: '',
+        // show: false
       }
     },
     created() {
@@ -151,12 +151,13 @@
         //   console.log(res)
         // })
         this.add(product).then(res => {
-          this.show = true
-          this.message = res
-          setTimeout(()=>{
-            this.show = false
-            this.message = ''
-          },1500)
+          // this.show = true
+          // this.message = res
+          // setTimeout(()=>{
+          //   this.show = false
+          //   this.message = ''
+          // },1500)
+          this.$toast.show(res,1500)
         })
       }
     },
