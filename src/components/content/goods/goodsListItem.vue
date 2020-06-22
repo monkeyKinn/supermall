@@ -1,7 +1,7 @@
 <template>
   <div class="goods-item" @click="itemClick">
     <!-- Vue中的@load="imgLoaded"监听图片加载函数-->
-    <img :src="showImage" alt="21" @load="imgLoaded">
+    <img v-lazy="showImage" alt="21" @load="imgLoaded">
     <div class="goods-info">
       <p>{{goodsItem.title}}</p>
       <span class="price">{{goodsItem.price}}</span>
