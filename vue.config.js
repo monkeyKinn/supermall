@@ -14,7 +14,7 @@ module.exports = {
   devServer: {
     proxy : {
       '/api': {
-        target :'http://152.136.185.210:8000/api/z8',
+        target :'你的接口地址xxx.xxx.xxx.xxx:8080',
         changeOrigin : true,
         pathRewrite: {
           /* 重写路径，当我们在浏览器中看到请求的地址为：http://localhost:8080/api/core/getData/userInfo 时
